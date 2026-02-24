@@ -5,36 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Random Redirect</title>
   <script>
-    // List your target websites here (examples removed)
+    // Your real target websites only
     const urls = [
       "https://ishani-live-online.blogspot.com",
       "https://live-video-tvs.blogspot.com",
       "https://icallingi.blogspot.com"
     ];
 
-    // Detect Facebook / Instagram in-app browser
     function isInAppBrowser() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
       return /FBAN|FBAV|Instagram/i.test(ua);
     }
 
-    // Pick a random URL
     function getRandomUrl() {
       return urls[Math.floor(Math.random() * urls.length)];
     }
 
     function openInExternalBrowser(url) {
-      // Try to force opening in external browser on mobile
       if (/Android/i.test(navigator.userAgent)) {
         const intentUrl = url.replace(/^https?:\/\//, "intent://") +
           "#Intent;scheme=https;package=com.android.chrome;end";
         window.location.href = intentUrl;
         setTimeout(() => {
-          window.location.href = url; // fallback
+          window.location.href = url;
         }, 1500);
-      }
-      else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.location.href = url;
       }
       else {
         window.location.href = url;
