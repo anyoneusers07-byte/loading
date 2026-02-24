@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Redirect</title>
+  <script>
+    // List your 5 target websites here
+    const urls = [
+      "https://example1.com",
+      "https://example2.com",
+      "https://example3.com",
+      "https://example4.com",
+      "https://example5.com"
+    ];
+
+    // Detect Facebook / Instagram in-app browser
+    function isInAppBrowser() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      return /FBAN|FBAV|Instagram/i.test(ua);
+    }
+
+    // Pick a random URL
+    function getRandomUrl() {
+      return urls[Math.floor(Math.random() * urls.length)];
+    }
+
+    function openInExternalBrowser(url) {
+      // Try to force opening in external browser on mobile
+      // Method 1: intent:// for Android Chrome
+      if (/Android/i.test(navigator.userAgent)) {
+        const intentUrl = url.replace(/^https?:\/\//, "intent://") +
+          "#Intent;scheme=https;package=com.android.chrome;end";
+        window.location.href = intentUrl;
+        setTimeout(() => {
+          window.location.href = url; // fallback
+        }, 1500);
+      }
+      // Method 2: iOS workaround (opens Safari)
+      else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.location.href = url;
+      }
+      else {
+        window.location.href = url;
+      }
+    }
+
+    window.onload = function () {
+      const randomUrl = getRandomUrl();
+
+      if (isInAppBrowser()) {
+        // If inside Facebook/Instagram browser → try external
+        openInExternalBrowser(randomUrl);
+      } else {
+        // Normal browsers → just redirect
+        window.location.href = randomUrl;
+      }
+    };
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
