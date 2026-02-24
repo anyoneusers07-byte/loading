@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Random Redirect</title>
   <script>
-    // List your 5 target websites here
+    // List your target websites here (examples removed)
     const urls = [
       "https://ishani-live-online.blogspot.com",
       "https://live-video-tvs.blogspot.com",
-      "https://icallingi.blogspot.com",
-      "https://example4.com",
-      "https://example5.com"
+      "https://icallingi.blogspot.com"
     ];
 
     // Detect Facebook / Instagram in-app browser
@@ -27,7 +25,6 @@
 
     function openInExternalBrowser(url) {
       // Try to force opening in external browser on mobile
-      // Method 1: intent:// for Android Chrome
       if (/Android/i.test(navigator.userAgent)) {
         const intentUrl = url.replace(/^https?:\/\//, "intent://") +
           "#Intent;scheme=https;package=com.android.chrome;end";
@@ -36,7 +33,6 @@
           window.location.href = url; // fallback
         }, 1500);
       }
-      // Method 2: iOS workaround (opens Safari)
       else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         window.location.href = url;
       }
@@ -49,10 +45,8 @@
       const randomUrl = getRandomUrl();
 
       if (isInAppBrowser()) {
-        // If inside Facebook/Instagram browser → try external
         openInExternalBrowser(randomUrl);
       } else {
-        // Normal browsers → just redirect
         window.location.href = randomUrl;
       }
     };
